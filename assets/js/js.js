@@ -21,6 +21,11 @@ function game(){
 
     //Array save
      //game basic function (import)
+
+    /**
+     *  $(window).mousemove(function (e) {});
+      **/
+
     var bullets=[],
         explosions=[],
         destroyed  = 0,
