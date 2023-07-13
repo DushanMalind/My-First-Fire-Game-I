@@ -5,11 +5,11 @@ const sprite=new Image();
 const spriteExplosion=new Image();
 
 //send background add
-sprite.src='![](../img/sprite.png)';
-
+//sprite.src='![](../img/sprite.png)';
+sprite.src='./assets/img/sprite.png';
 //fire effect
 window.onload=function (){
-    spriteExplosion.src='![](../img/explosion.png)';
+    spriteExplosion.src='./assets/img/explosion.png';
 };
 
 function game(){
@@ -117,7 +117,105 @@ function game(){
                 }
             }
         }
-
-
     }
+
+    function fire(){
+        var distance;
+
+        for (var i=0;i<bullets.length;i++){
+            if (!bullets[i].destroyed){
+                ctx.save();
+                ctx.translate(cW/2,cH/2);
+                ctx.rotate(bullets[i].deg);
+
+                ctx.drawImage(
+                    sprite,
+                    211,
+                    100,
+                    50,
+                    75,
+                    bullets[i].x,
+                    bullets[i].y -= 20,
+                    19,
+                    30
+                );
+
+                ctx.restore();
+
+                //Real coords
+                bullets[i].realX = (0) - (bullets[i].y + 10) * Math.sin(bullets[i].deg);
+                bullets[i].realY = (0) + (bullets[i].y + 10) * Math.cos(bullets[i].deg);
+
+                bullets[i].realX += cW/2;
+                bullets[i].realY += cH/2;
+
+                for (var j=0;j<asteroids.length;j++){
+                    if (!asteroids[j].destroyed){
+                        distance=Math.sqrt(Math.pow(asteroids[j].realX-bullets[i].realX,2)+
+                            Math.pow(asteroids[j].realY-bullets[i].realY,2));
+
+                        if (distance < (((asteroids[j].width/asteroids[j].size) / 2) - 4) + ((19 / 2) - 4)) {
+                            destroyed += 1;
+                            asteroids[j].destroyed = true;
+                            bullets[i].destroyed   = true;
+                            explosions.push(asteroids[j]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    function planet() {
+        ctx.save();
+        ctx.fillStyle   = 'white';
+        ctx.shadowBlur    = 100;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
+        ctx.shadowColor   = "#999";
+
+        ctx.arc(
+            (cW/2),
+            (cH/2),
+            100,
+            0,
+            Math.PI * 2
+        );
+        ctx.fill();
+
+        //Planet rotation
+        ctx.translate(cW/2,cH/2);
+        ctx.rotate((_planet.deg += 0.1) * (Math.PI / 180));
+        ctx.drawImage(sprite, 0, 0, 200, 200, -100, -100, 200,200);
+        ctx.restore();
+    }
+
+    function _player() {
+
+        ctx.save();
+        ctx.translate(cW/2,cH/2);
+
+        ctx.rotate(player.deg);
+        ctx.drawImage(
+            sprite,
+            200,
+            0,
+            player.width,
+            player.height,
+            player.posX,
+            player.posY,
+            player.width,
+            player.height
+        );
+
+        ctx.restore();
+
+        if(bullets.length - destroyed && playing) {
+            fire();
+        }
+    }
+
+
+
+
 }
