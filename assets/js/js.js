@@ -12,8 +12,13 @@ window.onload=function (){
     spriteExplosion.src='./assets/img/explosion.png';
 };
 
-function game(){
+let background=document.getElementById("bac1");
+let shoot=document.getElementById("fire");
+let loading=document.getElementById("load");
 
+
+
+function game(){
     var canvas=document.getElementById('canvas'),
         ctx=canvas.getContext('2d'),
         cH=ctx.canvas.height=window.innerHeight,
@@ -58,9 +63,9 @@ function game(){
         player.deg = Math.atan2(e.offsetX - (cW/2), -(e.offsetY - (cH/2)));
     }
 
-
     function action(e){
         e.preventDefault();
+
         if (playing){
             var bullet={
                 x: -8,
@@ -75,7 +80,7 @@ function game(){
                 destroyed: false
             };
             bullets.push(bullet);
-
+            shoot.play();
         }else {
             var dist;
             if (gameOver){
@@ -103,6 +108,7 @@ function game(){
 
                 if (dist<27){
                     if (e.type=='click'){
+                        loading.play();
                         playing=true;
                         canvas.removeEventListener("mousemove",action);
                         canvas.addEventListener("contextmenu",action);
@@ -121,7 +127,6 @@ function game(){
 
     function fire(){
         var distance;
-
         for (var i=0;i<bullets.length;i++){
             if (!bullets[i].destroyed){
                 ctx.save();
@@ -191,7 +196,6 @@ function game(){
     }
 
     function _player() {
-
         ctx.save();
         ctx.translate(cW/2,cH/2);
 
@@ -209,13 +213,13 @@ function game(){
         );
 
         ctx.restore();
-
         if(bullets.length - destroyed && playing) {
             fire();
         }
     }
 
     function start() {
+        background.play();
         if(!gameOver) {
             //Clear
             ctx.clearRect(0, 0, cW, cH);
@@ -223,7 +227,6 @@ function game(){
 
             //Planet
             planet();
-
             //Player
             _player();
 
