@@ -23,3 +23,54 @@ body
 {
     cursor: url("../img/aim_red.png")17.5 17.5,auto !important;;
 }
+
+.rocket1
+{
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100px;
+
+}
+
+.rocket1 img
+{
+    position: absolute;
+    width: 100px;
+    opacity: 0.15;
+}
+
+.fire
+{
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100px;
+   /* opacity: 0.65;*/
+
+
+}
+
+.fire img
+{
+
+    position: absolute;
+    width: 50px;
+    color: red;
+    left: 0;
+    animation: bom 10s linear infinite;
+}
+
+@keyframes bom {
+    100%{
+        transform: translateX(1000px);
+        opacity: 0;
+    }
+    50%{
+        transform: translateX(100px);
+    }
+    0%{
+        transform: translateY(-1px);
+    }
+}
