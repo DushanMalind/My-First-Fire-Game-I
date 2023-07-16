@@ -63,6 +63,37 @@ function game(){
         player.deg = Math.atan2(e.offsetX - (cW/2), -(e.offsetY - (cH/2)));
     }
 
+    const audio = new Audio();
+    audio.src = './assets/sound/fire.mp3';
+   // audio.cloneNode(true);
+
+    const playSOUND=function playAudio() {
+        var isClicking = false;
+        var clickTimer = null;
+
+        if (!isClicking) {
+            isClicking = true;
+            var audioClone = audio.cloneNode(true);
+
+            audioClone.play();
+
+            // Start the continuous clicking timer
+            clickTimer = setInterval(function() {
+                // Create a new audio instance for continuous playback
+                var audioClone = audio.cloneNode(true);
+
+                // Play the effect sound continuously
+                audioClone.play();
+            }, 100); // Adjust the interval time (in milliseconds) for continuous clicking
+        }
+
+        clearInterval(clickTimer);
+
+        // Reset clicking flag
+        isClicking = false;
+    }
+
+
     function action(e){
         e.preventDefault();
 
@@ -80,7 +111,8 @@ function game(){
                 destroyed: false
             };
             bullets.push(bullet);
-            shoot.play();
+           playSOUND();
+          //  shoot.play();
         }else {
             var dist;
             if (gameOver){
