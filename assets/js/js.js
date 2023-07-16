@@ -227,8 +227,13 @@ function game(){
     });
 */
 
+    background.volume = 0.1;
+  //  background.currentTime = 10;
+  //  background.addTextTrack("subtitles", 10);
+   // background.load();
+
     function start() {
-      // background.play();
+       background.play();
         if(!gameOver) {
             //Clear
             ctx.clearRect(0, 0, cW, cH);
