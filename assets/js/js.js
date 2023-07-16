@@ -218,8 +218,17 @@ function game(){
         }
     }
 
+   /* $(document).ready(function() {
+        $('#start').on('click', function() {
+            var bac1 = $('#bac1')[0];
+
+            bac1.play();
+        });
+    });
+*/
+
     function start() {
-        background.play();
+      // background.play();
         if(!gameOver) {
             //Clear
             ctx.clearRect(0, 0, cW, cH);
