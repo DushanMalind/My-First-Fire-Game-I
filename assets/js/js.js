@@ -355,12 +355,50 @@ function game(){
 
         if(asteroids.length - destroyed < 10 + (Math.floor(destroyed/6))) {
             newAsteroid();
+            newExplosionDis();
         }
+    }
+
+    const newExplosions = new Audio();
+    newExplosions.src = './assets/sound/destroy.mp3';
+
+
+
+    const newExplosionDis=function playAudio() {
+        var isClicking = false;
+        var clickTimer = null;
+
+        if (!isClicking) {
+            isClicking = true;
+            var audioClones = newExplosions.cloneNode(true);
+
+            audioClones.volume = 0.1;
+
+            audioClones.play();
+
+
+
+            // Start the continuous clicking timer
+            clickTimer = setInterval(function() {
+                // Create a new audio instance for continuous playback
+                var audioClones = newExplosions.cloneNode(true);
+
+                audioClones.volume = 0.1;
+                // Play the effect sound continuously
+                audioClones.play();
+            }, 100); // Adjust the interval time (in milliseconds) for continuous clicking
+        }
+
+        clearInterval(clickTimer);
+
+        // Reset clicking click sound
+        isClicking = false;
     }
 
 
     function explosion(asteroid) {
         ctx.save();
+
         ctx.translate(asteroid.realX, asteroid.realY);
         ctx.rotate(asteroid.deg);
 
