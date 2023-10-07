@@ -48,24 +48,25 @@ body
     right: 0;
     width: 100px;
    /* opacity: 0.65;*/
-
-
 }
 
 .fire img
 {
-
     position: absolute;
     width: 50px;
     color: red;
     left: 0;
+    right: 0;
     animation: bom 10s linear infinite;
+    pointer-events: none;
+    outline: none;
+
 }
 
 @keyframes bom {
     100%{
         transform: translateX(1000px);
-        opacity: 0;
+        opacity: 0.15;
     }
     50%{
         transform: translateX(100px);
